@@ -162,9 +162,8 @@ No real user data or sensitive information is stored in this repository.
 ```
 aws-glue-social-media-etl/
 │
-├── README.md                        ← Main project overview (with visuals & results)
-├── .gitignore                       ← (optional) standard ignore rules
-├── LICENSE                          ← MIT License (recommended)
+├── README.md                
+├── LICENSE                        
 │
 ├── data/
 │   ├── raw/
@@ -191,7 +190,7 @@ aws-glue-social-media-etl/
 │   │   └── sql-query-result.png
 │   │
 │   └── report/                      ← Course documentation & deliverables
-│       ├── ETL_Project_Report.pdf   ← Your final Simplilearn project report
+│       ├── ETL_Project_Report.pdf   ←  final project report
 │       └── Simplilearn_Project_Guidelines.pdf
 │
 └── src/
