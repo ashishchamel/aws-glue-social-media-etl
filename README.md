@@ -157,7 +157,47 @@ All data is sample/anonymized and used only for educational purposes.
 No real user data or sensitive information is stored in this repository.
 
 ---
+### 📂 Repository Structure
 
+```
+aws-glue-social-media-etl/
+│
+├── README.md                        ← Main project overview (with visuals & results)
+├── .gitignore                       ← (optional) standard ignore rules
+├── LICENSE                          ← MIT License (recommended)
+│
+├── data/
+│   ├── raw/
+│   │   ├── tweets_raw.csv           ← Raw Twitter dataset
+│   │   └── blogs_raw.csv            ← Raw Blog dataset
+│   │
+│   └── processed/
+│       ├── etl_output_sample.csv    ← Local sample output (aggregated)
+│       └── README_placeholder.txt   ← Note explaining real S3 output stored in AWS
+│
+├── docs/
+│   ├── images/                      ← All AWS Glue screenshots & visuals
+│   │   ├── s3-input-buckets.png
+│   │   ├── s3-folder-blogs.png
+│   │   ├── s3-folder-tweets.png
+│   │   ├── twitter_data-glue-classifiers.png
+│   │   ├── blog_data-glue-classifiers.png
+│   │   ├── iam-role.png
+│   │   ├── tweet-glue-crawlers-1.png
+│   │   ├── blog-glue-crawlers-2.png
+│   │   ├── etl-job-visual.png
+│   │   ├── etl-job-run-success.png
+│   │   ├── s3-output-bucket.png
+│   │   └── sql-query-result.png
+│   │
+│   └── report/                      ← Course documentation & deliverables
+│       ├── ETL_Project_Report.pdf   ← Your final Simplilearn project report
+│       └── Simplilearn_Project_Guidelines.pdf
+│
+└── src/
+    └── README_placeholder.txt       ← Explains AWS Glue job stored inside AWS
+
+```
 ## 🧑‍💻 Author
 
 **Ashish Chamel**  
