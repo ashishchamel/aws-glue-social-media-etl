@@ -1,62 +1,163 @@
 # 📊 Social Media Data Integration & Analysis using AWS Glue  
 
-A complete ETL pipeline built on AWS Glue that integrates and analyzes social media data from Twitter and Blogs.
+This project demonstrates an **end-to-end ETL pipeline** built on **AWS Glue** to integrate, transform, and analyze **Twitter and Blog data** stored in Amazon S3.
 
 ---
 
-### 🧠 What This Project Does
-This project extracts CSV data from Amazon S3 buckets, transforms it using AWS Glue Visual ETL (joins, regex extraction, aggregation), and loads the cleaned results back into an S3 output bucket.  
-All steps are shown with screenshots and explanations in the attached report.
+## 🧩 Project Overview
+
+**Objective:**  
+To integrate and analyze social media data from Twitter and Blogs using AWS Glue Visual ETL, automate data transformation, and store the cleaned results in Amazon S3 for analysis.
+
+**Data Sources:**
+- `tweets_raw.csv`
+- `blogs_raw.csv`
 
 ---
 
-### 🗂️ Folder Overview
+## ⚙️ Architecture Flow
 
-```
-aws-glue-social-media-etl/
-├── README.md
-├── data/
-│   ├── raw/ → raw Twitter & Blog data
-│   └── processed/ → sample output
-├── docs/
-│   ├── images/ → optional screenshots
-│   └── report/ → project documentation (PDF + guidelines)
-└── src/ → placeholder for AWS Glue scripts
-```
+![AWS Glue Visual ETL Flow](docs/images/etl-job-visual.png)
+
+**Steps:**
+1. Data extracted from S3 (two sources)
+2. Joined on `user_id`
+3. Dropped duplicate fields
+4. Extracted hashtags with regex
+5. Aggregated tweet counts & timestamps
+6. Loaded final results to an S3 output bucket
 
 ---
 
-### 📄 What’s Inside
+## 🪣 Step 1 — S3 Bucket Setup
+
+**Created input bucket:** `etl-twitter-blog-ashish`  
+**Folders:** `blog-data` and `etl-social-media`
+
+![S3 Input Buckets](docs/images/s3-input-buckets.png)
+![S3 Blog Folder](docs/images/s3-folder-blogs.png)
+![S3 Tweets Folder](docs/images/s3-folder-tweets.png)
+
+---
+
+## 🧠 Step 2 — AWS Glue Classifiers
+
+Created classifiers for reading both CSV files.
+
+| Classifier | Type | Delimiter | Quote | Headers |
+|-------------|------|------------|--------|----------|
+| `twitter_data` | CSV | , | " | Has headings |
+| `blog_data` | CSV | , | " | Has headings |
+
+**Visuals:**
+
+![Twitter Classifier](docs/images/twitter_data-glue-classifiers.png)
+![Blog Classifier](docs/images/blog_data-glue-classifiers.png)
+
+---
+
+## 🧾 Step 3 — IAM Role Configuration
+
+Created IAM role `glue-role` with **AdministratorAccess** to allow Glue to read/write to S3 and create jobs.
+
+![IAM Role](docs/images/iam-role.png)
+
+---
+
+## 🕸️ Step 4 — AWS Glue Crawlers
+
+Crawlers were created to catalog both datasets into the **AWS Glue Data Catalog**.
+
+| Crawler | Source | Database | Status |
+|----------|---------|-----------|---------|
+| `tweet-crawl` | tweets_raw.csv | social_media_data | ✅ Success |
+| `blog-crawler` | blogs_raw.csv | social_media_data | ✅ Success |
+
+**Visuals:**
+![Tweet Crawler](docs/images/tweet-glue-crawlers-1.png)
+![Blog Crawler](docs/images/blog-glue-crawlers-2.png)
+
+---
+
+## 🧮 Step 5 — AWS Glue Visual ETL Job
+
+This is the visual ETL pipeline created in Glue Studio:
+
+![AWS Glue Job Visual](docs/images/etl-job-visual.png)
+
+**Transformations included:**
+1. Join → Inner Join on `user_id`
+2. Drop Fields → Removed duplicate `user_id`
+3. Regex Extractor → Extracted hashtags using pattern `#(\w+)`
+4. Aggregate → Counted tweets per user & calculated minimum timestamp
+5. Target → Wrote result to S3 output bucket
+
+---
+
+## ✅ Step 6 — ETL Job Execution
+
+Job executed successfully and saved the output to `etl-cep-output-ashish`.
+
+![ETL Job Run Success](docs/images/etl-job-run-success.png)
+
+---
+
+## 🗃️ Step 7 — Output Verification
+
+The final dataset was saved in an S3 output folder.  
+A sample SQL query was executed on the result file to verify correctness.
+
+![S3 Output Bucket](docs/images/s3-output-bucket.png)
+![SQL Query Result](docs/images/sql-query-result.png)
+
+---
+
+## 🧾 Result Snapshot
+
+| User ID | Blog ID | Timestamp |
+|----------|----------|------------|
+| 123 | 1 | 2024-05-20T08:00:00 |
+
+---
+
+## 🧠 Key Learnings
+
+- Building ETL pipelines using **AWS Glue Visual Interface**  
+- Managing **data catalogs, crawlers, and classifiers**  
+- Using **Regex extraction and Aggregation** transformations  
+- Automating S3-based data pipelines securely with **IAM roles**
+
+---
+
+## 🧰 Tools & Services Used
+
+- **Amazon S3** – Data storage and output buckets  
+- **AWS Glue** – ETL job, Data Catalog, Classifiers, Crawlers  
+- **IAM** – Role-based access management  
+- **AWS Glue Studio** – Visual ETL workflow design  
+- **SQL on S3** – Query validation
+
+---
+
+## 📚 Files in This Repository
 
 | Folder | Description |
 |--------|--------------|
-| `docs/report/` | Contains project reports and Simplilearn guideline |
-| `data/raw/` | Raw datasets (`tweets_raw.csv`, `blogs_raw.csv`) |
-| `data/processed/` | Contains sample ETL output |
-| `src/` | Placeholder describing AWS Glue job setup |
+| `data/raw/` | Raw Twitter & Blog datasets |
+| `data/processed/` | Sample output CSV |
+| `docs/images/` | ETL visuals & AWS screenshots |
+| `docs/report/` | Project report & guidelines |
+| `src/` | Placeholder for AWS Glue job scripts |
 
 ---
 
-### 🧾 Implementation Summary
-The ETL job was built entirely in **AWS Glue Studio (Visual ETL)**.  
-Since AWS Glue stores scripts internally in your AWS account, no `.py` files are downloadable.  
-All transformations (joins, drop fields, regex extraction, aggregation) and results are fully documented in the PDF report (`docs/report/ETL_Project_Report.pdf`).
+## 🧠 Ethical Statement
+
+All data is sample/anonymized and used only for educational purposes.  
+No real user data or sensitive information is stored in this repository.
 
 ---
 
-### 🧩 Sample Output (from included CSV)
+## 🧑‍💻 Author
 
-| User ID | Blog ID | Tweet Count | Min Timestamp |
-|----------|----------|-------------|----------------|
-| 123 | 1 | 5 | 2024-05-20T08:00:00 |
-
----
-
-### 🧠 Ethical Statement
-All datasets included here are sample, anonymized educational data only.  
-No real or personal information is used in this project.
-
----
-
-### 🧑‍💻 Author
 **Ashish Chamel**  
