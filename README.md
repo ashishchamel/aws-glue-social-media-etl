@@ -60,6 +60,3 @@ No real or personal information is used in this project.
 
 ### 🧑‍💻 Author
 **Ashish Chamel**  
-ETL Certification – Simplilearn  
-📅 April 2025  
-📍 [GitHub Profile](https://github.com/YOUR-USERNAME)
